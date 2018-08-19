@@ -1,0 +1,29 @@
+安装ActivePerl for Linux?
+前提条件?
+硬件：典型安装需要250 MB的硬盘空间
+操作系统：使用glibc 2.15或更高版本的Linux发行版（例如Ubuntu 12.04）
+在线帮助：Web浏览器
+检查LD_LIBRARY_PATH变量，并取消设置Perl＆Lib的任何引用
+在Linux上安装的activeperl ?
+安装程序允许作为非特权用户安装到用户指定的路径中。GNU tar是提取文件所必需的。有关详细信息，请参阅 “ActivePerl发行说明”中的已知问题。
+警告：不要使用包管理器来安装ActivePerl，因为它们使用不同的算法，并会破坏tarball文件。
+将发行版下载到临时目录，将文件chdir提取到ActivePerl目录，然后运行脚本install.sh 
+
+。安装脚本将提示您接受许可协议并指定目标安装目录。
+% tar zxf ActivePerl-<version>.tar.gz
+% cd ActivePerl-5.24.1.2402/
+% ./install.sh 
+
+如果您与其他人共享系统，或者您没有root权限，建议您将ActivePerl安装在您自己的用户目录中。例如：
+/home/<username>/ActivePerl-5.24
+我们建议在你的shell配置文件（例如.profile，.bashrc或者.cshrc）文件中加入下面一行，以便在你打开一个新的终端窗口，登录等时自动加载这个路径。
+PATH=$PATH:/home/<username>/bin
+另外，我们建议您创建二进制文件的符号链接：
+mkdir /home/<username>/bin
+ln -s /home/<username>/ActivePerl-5.24/bin/perl /home/<username>/bin/perl
+ln -s /home/<username>/ActivePerl-5.24/bin/ppm /home/<username>/bin/ppm
+这将允许您使用以下命令调用ActivePerl：
+perl -e 'print "Hello World!\n"'
+卸载的ActivePerl在Linux上?
+如果使用AS格式安装程序安装了ActivePerl，请删除ActivePerl的安装目录。例如：
+sudo /bin/rm -rf /opt/ActivePerl-5.24

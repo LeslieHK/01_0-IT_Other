@@ -1,0 +1,185 @@
+1、编译：
+  交互式编程
+    交互式编程不需要创建脚本文件，可以通过以下命令调用：scala
+
+  脚本形式
+    我们也可以通过创建一个 HelloWorld.scala 的文件来执行代码，
+    接下来我们使用 scalac 命令编译它：$ scalac HelloWorld.scala
+    编译后我们可以看到目录下生成了 HelloWorld.class 文件，该文件可以在Java Virtual Machine (JVM)上运行。
+    编译后，我们可以使用以下命令来执行程序：$ scala HelloWorld
+
+2、定义包
+  第一种方法和 Java 一样，在文件的头定义包名
+
+  第二种方法有些类似 C#（可以在一个文件中定义多个包），如： 
+    package com.runoob {
+      class HelloWorld 
+    }
+
+3、引用
+  import语句可以出现在任何地方，而不是只能在文件顶部。import的效果从开始延伸到语句块的结束。这可以大幅减少名称冲突的可能性。
+
+  如果想要引入包中的几个成员，可以使用selector（选取器）：
+    import java.awt.{Color, Font}
+ 
+  // 重命名成员
+    import java.util.{HashMap => JavaHashMap}
+ 
+  // 隐藏成员
+    import java.util.{HashMap => _, _} // 引入了util包的所有成员，但是HashMap被隐藏了
+
+  注意：默认情况下，Scala 总会引入 java.lang._ 、 scala._ 和 Predef._，这里也能解释，为什么以scala开头的包，在使用时都是省去scala.的。
+
+4、Scala数据类型
+  数据类型都是对象，也就是说scala没有java中的原生类型。在scala是可以对数字等基础类型调用方法的。
+  Int			Integer
+
+  Unil			void
+
+  Any				Object
+  AnyRef		AnyRef类是Scala里所有引用类(reference class)的基类
+
+  Null			null 或空引用
+  Nothing		Nothing类型在Scala的类层级的最低端；它是任何其他类型的子类型。
+
+5、字面量
+  在计算机科学中，字面量（literal）是用于表达源代码中一个固定值的表示法（notation）
+  
+  符号字面量：
+    符号字面量被写成： '<标识符> ，这里 <标识符> 可以是任何字母或数字的标识（注意：不能以数字开头）。
+    这种字面量被映射成预定义类scala.Symbol的实例。如： 符号字面量 'x 是表达式 scala.Symbol("x") 的简写
+    
+  字符字面量：						在scala中字符类型表示为半角单引号(')中的字符
+  字符串字面量：					字符串表示方法是在双引号中(") 包含一系列字符
+  多行字符串的表示方法：	多行字符串用三个双引号来表示分隔符，格式为：""" ... """。
+  
+8、Null类是null引用对象的类型，它是每个引用类（继承自AnyRef的类）的子类。Null不兼容值类型。
+
+9、变量与常量的声明
+  var myVar : String = "Foo"
+  val myVal : String = "Foo"
+  
+10、变量的类型在变量名之后等号之前声明
+
+  在 Scala 中声明变量和常量不一定要指明数据类型，在没有指明数据类型的情况下，其数据类型是通过变量或常量的初始值推断出来的。
+  
+  所以，如果在没有指明数据类型的情况下声明变量或常量必须要给出其初始值，否则将会报错。
+  
+11、元组
+  scala> val pa = (40,"Foo")
+  pa: (Int, String) = (40,Foo)
+
+12、修饰符
+  如果没有指定访问修饰符符，默认情况下，Scala对象的访问级别都是 public
+  
+  Scala 中的 private 限定符，比 Java 更严格，在嵌套类情况下，外层类甚至不能访问被嵌套类的私有成员
+  
+  在 scala 中，对保护（Protected）成员的访问比 java 更严格一些。
+  因为它只允许保护成员在定义了该成员的的类的子类中被访问。
+  而在java中，用protected关键字修饰的成员，除了定义了该成员的类的子类可以访问，同一个包里的其他类也可以进行访问。
+  
+13、作用域保护
+  Scala中，访问修饰符可以通过使用限定词强调。格式为:
+    private[x] 
+    或 
+    protected[x]
+  
+  这里的x指代某个所属的包、类或单例对象。如果写成private[x],读作"这个成员除了对[…]中的类或[…]中的包中的类及它们的伴生对像可见外，对其它所有类都是private。
+
+14、For循环
+  for( var x <- Range ){
+    statement(s);
+  }
+  
+  二级循环：
+  for( a <- 1 to 3; b <- 1 to 3)
+
+  条件循环：  
+  for( var x <- List if condition1; if condition2...){}
+
+
+15、Scala 不支持 break 或 continue 语句
+
+  // 导入以下包
+  import scala.util.control._
+  // 创建 Breaks 对象
+  val loop = new Breaks;
+
+  // 在 breakable 中循环
+  loop.breakable{
+    // 循环
+    for(...){
+       ....
+       // 循环中断
+       loop.break;
+    }
+  }
+
+16、函数
+  可以在函数内定义函数（内嵌函数）
+  
+  Scala 函数名可以有以下特殊字符：+, ++, ~, &,-, -- , \, /, : 等。
+  
+  def functionName ([参数列表]) : [return type] = {
+    function body
+    return [expr]
+  }
+  
+17、Scala的解释器在解析函数参数(function arguments)时有两种方式：
+  传值调用（call-by-value）：先计算参数表达式的值，再应用到函数内部；
+  传名调用（call-by-name）：将未计算的参数表达式直接应用到函数内部
+    def delayed( t: => Long ) = {}
+
+18、
+  Scala 指定函数参数名：
+    printInt(b=5, a=7);
+  
+  Scala 可以为函数参数指定默认参数值
+  def addInt( a:Int=5, b:Int=7 ) : Int
+
+  Scala 允许你指明函数的最后一个参数可以是重复的
+    def printStrings( args:String* )
+
+19、Scala 中定义匿名函数的语法很简单，箭头左边是参数列表，右边是函数体。
+  var inc = (x:Int) => x+1
+
+20、字符串：
+  在 Scala 中，字符串的类型实际上是 Java String，它本身没有 String 类。
+  
+  String 类中你可以使用 printf() 方法来格式化字符串并输出
+  
+21、数组
+  var z:Array[String] = new Array[String](3)
+  
+  var z = Array("Runoob", "Baidu", "Google")
+  
+  多维数组：
+    var myMatrix = ofDim[Int](3,3)
+    
+  区间数组：
+    range(10, 20, 2)
+    
+22、Scala列表有三个基本操作：
+  head 返回列表第一个元素
+  tail 返回一个列表，包含除了第一元素之外的其他元素
+  isEmpty 在列表为空时返回true
+  
+  你可以使用 ::: 运算符或 List.:::() 方法或 List.concat() 方法来连接两个或多个列表
+
+23、List方法：
+  +：		为列表预添加元素
+  ::		在列表开头添加元素
+  :::		在列表开头添加指定列表的元素
+  :+		复制添加元素后列表
+  
+24、Scala 只允许继承一个父类。
+
+
+
+Scala中的类不声明为public
+Scala 的类定义可以有参数，称为类参数
+
+
+
+
+
